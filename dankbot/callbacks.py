@@ -2,8 +2,8 @@ import logging
 
 from nio import JoinError
 
-from my_project_name.bot_commands import Command
-from my_project_name.message_responses import Message
+from dankbot.bot_commands import Command
+from dankbot.message_responses import Message
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,5 @@
 [Unit]
-Description=A matrix bot that does amazing things!
+Description=A dank bot for Matrix that does amazing things!
 
 [Service]
 Type=simple

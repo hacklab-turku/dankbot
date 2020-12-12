@@ -1,6 +1,6 @@
 # Docker
 
-The docker image will run my-project-name with a SQLite database and
+The docker image will run dankbot with a SQLite database and
 end-to-end encryption dependencies included. For larger deployments, a
 connection to a Postgres database backend is recommended.
 
@@ -124,7 +124,7 @@ Then restart the bot.
 ## Systemd
 
 A systemd service file is provided for your convenience at
-[my-project-name.service](my-project-name.service). The service uses
+[my-project-name.service](dankbot.service). The service uses
 `docker-compose` to start and stop the bot.
 
 Copy the file to `/etc/systemd/system/my-project-name.service` and edit to
