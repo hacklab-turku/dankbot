@@ -29,7 +29,7 @@ FROM docker.io/python:${PYTHON_VERSION}-alpine3.11
 ##
 
 # Install libolm build dependencies
-ARG LIBOLM_VERSION=3.1.4
+ARG LIBOLM_VERSION=3.2.1
 RUN apk add --no-cache \
     make \
     cmake \
@@ -53,19 +53,24 @@ RUN apk add --no-cache \
 
 # Install python runtime modules. We do this before copying the source code
 # such that these dependencies can be cached
-RUN mkdir -p /src/my_project_name
-COPY my_project_name/__init__.py /src/my_project_name/
-COPY README.md my-project-name /src/
+RUN mkdir -p /src/dankbot
+COPY dankbot/__init__.py /src/dankbot/
+COPY requirements.txt /src/
+COPY README.md dankbot /src/
 COPY setup.py /src/setup.py
-RUN pip install -e "/src/.[postgres]"
+RUN pip install /src/dankbot/
 
 # Now copy the source code
-COPY my_project_name/*.py /src/my_project_name/
+COPY dankbot/*.py /src/dankbot/
 COPY *.py /src/
 
 # Specify a volume that holds the config file, SQLite3 database,
 # and the matrix-nio store
 VOLUME ["/data"]
 
+RUN apk add --no-cache bash
+
 # Start the app
-ENTRYPOINT ["my-project-name", "/data/config.yaml"]
+#ENTRYPOINT ["bot", "/data/config.yaml"]
+#ENTRYPOINT ["python /src/dankbot/dank-nio-main"]
+ENTRYPOINT ["bash"]

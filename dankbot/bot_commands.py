@@ -7,15 +7,10 @@ class Command(object):
 
         Args:
             client (nio.AsyncClient): The client to communicate to matrix with
-
             store (Storage): Bot storage
-
             config (Config): Bot configuration parameters
-
             command (str): The command and arguments
-
             room (nio.rooms.MatrixRoom): The room the command was sent in
-
             event (nio.events.room_events.RoomMessageText): The event describing the command
         """
         self.client = client
@@ -32,6 +27,8 @@ class Command(object):
             await self._echo()
         elif self.command.startswith("help"):
             await self._show_help()
+        elif self.command.startswith("invite"):
+            await self._invite()
         else:
             await self._unknown_command()
 
@@ -39,6 +36,23 @@ class Command(object):
         """Echo back the command's arguments"""
         response = " ".join(self.args)
         await send_text_to_room(self.client, self.room.room_id, response)
+
+    async def _invite(self):
+        if not self.args:
+            text = (
+                "You did not give me an invite."
+            )
+            await send_text_to_room(self.client, self.room.room_id, text)
+
+        try:
+            if self.args[0] == "join":
+                await self.client.join(self.args[1])
+                text = "Successfully joined given room."
+            elif self.args[0] == "leave":
+                await self.client.room_leave(self.room.room_id)
+        except Exception as e:
+            text = "Joining to room failed."
+        await send_text_to_room(self.client, self.room.room_id, text)
 
     async def _show_help(self):
         """Show the help text"""

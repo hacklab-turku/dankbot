@@ -124,7 +124,7 @@ Then restart the bot.
 ## Systemd
 
 A systemd service file is provided for your convenience at
-[my-project-name.service](dankbot.service). The service uses
+[dankbot.service](dankbot.service). The service uses
 `docker-compose` to start and stop the bot.
 
 Copy the file to `/etc/systemd/system/my-project-name.service` and edit to

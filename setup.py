@@ -25,7 +25,7 @@ long_description = read_file(("README.md",))
 
 
 setup(
-    name="my-project-name",
+    name="dankbot",
     version=version,
     url="https://github.com/anoadragon453/nio-template",
     description="A matrix bot to do amazing things!",
@@ -55,5 +55,5 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     # Allow the user to run the bot with `my-project-name ...`
-    scripts=["my-project-name"],
+    #scripts=["dankbot"],
 )
