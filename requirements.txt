@@ -22,7 +22,7 @@ pycparser==2.20
 pycryptodome==3.9.9
 pyrsistent==0.17.3
 python-olm==3.1.3
-PyYAML==5.3.1
+PyYAML==5.4
 six==1.15.0
 typing-extensions==3.7.4.3
 unpaddedbase64==1.1.0
