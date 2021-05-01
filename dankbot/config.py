@@ -6,7 +6,7 @@ from typing import Any, List
 
 import yaml
 
-from dankbot.errors import ConfigError
+from errors import ConfigError
 
 logger = logging.getLogger()
 

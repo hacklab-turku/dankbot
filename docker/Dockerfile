@@ -60,7 +60,7 @@ RUN apk add --no-cache \
 # This speeds up subsequent image builds when the source code is changed
 RUN mkdir -p /src/dankbot
 COPY dankbot/__init__.py /src/dankbot/
-COPY README.md my-project-name /src/
+COPY README.md dankbot /src/
 
 # Build the dependencies
 COPY setup.py /src/setup.py

@@ -14,9 +14,9 @@ from nio import (
     RoomMessageText,
 )
 
-from dankbot.callbacks import Callbacks
-from dankbot.config import Config
-from dankbot.storage import Storage
+from callbacks import Callbacks
+from config import Config
+from storage import Storage
 
 logger = logging.getLogger(__name__)
 

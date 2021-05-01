@@ -1,4 +1,4 @@
-from dankbot.chat_functions import send_text_to_room
+from chat_functions import send_text_to_room
 
 
 class Command(object):
@@ -49,10 +49,10 @@ class Command(object):
                 await self.client.join(self.args[1])
                 text = "Successfully joined given room."
             elif self.args[0] == "leave":
-                await self.client.room_leave(self.room.room_id)
+                await self.client.room_leave(self.args[1])
         except Exception as e:
-            text = "Joining to room failed."
-        await send_text_to_room(self.client, self.room.room_id, text)
+            text = f"Joining to room failed, {e}"
+            await send_text_to_room(self.client, self.room.room_id, text)
 
     async def _show_help(self):
         """Show the help text"""
