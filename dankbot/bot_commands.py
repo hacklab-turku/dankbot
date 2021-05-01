@@ -59,27 +59,31 @@ class Command(object):
             await send_text_to_room(self.client, self.room.room_id, text)
 
     async def _lab(self):
-        topic = self.args[0]
+        try:
+            topic = self.args[0]
+            if topic == "light":
+                msg = await self._lab_light()
+                await send_text_to_room(self.client, self.room.room_id, msg)
+            elif topic == "wifi":
+                msg = await self._lab_wifi()
+                await send_text_to_room(self.client, self.room.room_id, msg)
+            else:
+                first_msg = "You did not specify which information you want, so I'm gonna guess it as both."
+                await send_text_to_room(self.client, self.room.room_id, first_msg)
+                light_msg = await self._lab_light()
+                await send_text_to_room(self.client, self.room.room_id, light_msg)
+                wifi_msg = await self._lab_wifi()
+                await send_text_to_room(self.client, self.room.room_id, wifi_msg)
+        except IndexError:
+            pass
 
-        if topic == "light":
-            msg = await self._lab_light()
-            await send_text_to_room(self.client, self.room.room_id, msg)
-        elif topic == "wifi":
-            msg = await self._lab_wifi()
-            await send_text_to_room(self.client, self.room.room_id, msg)
-        else:
-            first_msg = "You did not specify which information you want, so I'm gonna guess it as both."
-            await send_text_to_room(self.client, self.room.room_id, first_msg)
-            light_msg = await self._lab_light()
-            await send_text_to_room(self.client, self.room.room_id, light_msg)
-            wifi_msg = await self._lab_wifi()
-            await send_text_to_room(self.client, self.room.room_id, wifi_msg)
 
     async def _lab_light(self):
         async with aiohttp.ClientSession() as session:
             async with session.get("http://localhost/pi_api/gpio/?a=readPin&pin=1") as response:
-                api_response = json.loads(await response.json())
-                if api_response == 0:
+                api_response = await response.json()
+                api_data = api_response['data']
+                if api_data == 0:
                     msg = "Someone is probably at the lab as the light is on."
                 else:
                     msg = "Nobody is at the lab, the light is currently off."
@@ -88,7 +92,7 @@ class Command(object):
     async def _lab_wifi(self):
         async with aiohttp.ClientSession() as session:
             async with session.get("http://localhost/visitors/api/v1/visitors.php?format=json") as response:
-                api_response = json.loads(await response.json())
+                api_response = await response.json()
                 if not api_response:
                     msg = "Nobody is using the Wifi that I know of currently."
                 else:
